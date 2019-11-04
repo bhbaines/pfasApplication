@@ -1,6 +1,5 @@
 import grass.script as grass
-import sys
-import time
+
 
 #Snap Coordinates
 
@@ -15,8 +14,6 @@ sites = sites_file.readlines()[1:]
 sites_cleaned = [site.strip() for site in sites]
 coords = [site.split(',') for site in sites_cleaned]
 
-restart_after = 1 * 3600  # seconds (hours * 60  * 60)
-max_tries = 5  # do not try more than n times for one site
 
 #Create cont areas using 500m DEM and snapped points csv as outlet points, convert areas to vectors, download usgs NED data for this area
 for site in coords:
@@ -27,16 +24,6 @@ for site in coords:
                       coordinates=coordPair, overwrite=True)
     grass.run_command('r.to.vect', input='ContArea_{}'.format(cat), output='ContArea_{}_vect'.format(cat), type='area', overwrite=True)
     grass.run_command('g.region', vector='ContArea_{}_vect'.format(cat))
-    tries = 0
-    while tries < max_tries:
-        tries += 1
-        try:
-            grass.run_command('r.in.usgs', product='ned', output_name='ContArea_{}_NED'.format(cat),
-                              output_directory= usgsDir, ned_dataset='ned19sec', flags='k', overwrite=True)
-            break
-        except grass.CalledModuleError:
-            time.sleep(restart_after)
-
 
 #Patch all usgs raster together
     
