@@ -17,8 +17,6 @@ for row in gpsRead:
     epaID = cells[10]
     epa_IDs.append(epaID)
 
-rowIncrement = 0
-rowRestart = 46
 
 for id in epa_IDs:
     for row in chemRead:
