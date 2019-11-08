@@ -10,7 +10,7 @@ if len(sys.argv) != 1 and sys.argv[1]:
 else:
     sys.exit("Usage: script.py pattern (e.g., ^ContArea_SW_[0-9]+_vect$)")
 
-contAreas = gs.read_command("g.list", type="vector", pattern="^ContArea_SW_[0-9]+_vect$", flags="e", mapset=".").splitlines()
+contAreas = gs.read_command("g.list", type="vector", pattern=pattern, flags="e", mapset=".").splitlines()
 
 for area in contAreas:
     gs.run_command("g.region", vector=area)
