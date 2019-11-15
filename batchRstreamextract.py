@@ -17,8 +17,7 @@ if len(sys.argv) != 1 and sys.argv[1]:
         sys.exit("Please enter name of elevation raster - Usage: script.py pattern elevation")
 else:
     sys.exit("Please enter filename pattern - Usage: script.py pattern (e.g., ^ContArea_SW_[0-9]+_vect$)")
-accumRasts = 
 accumRasts = gs.read_command("g.list", type="raster", pattern=pattern, flags="e", mapset=".").splitlines()
 for accum in accumRasts:
     gs.run_command("g.region", raster=accum)
-    gs.run_command("r.stream.extract", elevation=elevRast, threshold=streamThresh, stream_raster=accum + '_streams')
+    gs.run_command("r.stream.extract", accumulation=accum, elevation=elevRast, threshold=streamThresh, stream_raster=accum + '_streams')
