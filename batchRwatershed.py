@@ -15,6 +15,8 @@ else:
 
 contAreas = gs.read_command("g.list", type="vector", pattern=pattern, exclude=exclude, flags="e").splitlines()
 
+gs.use_temp_region()
+
 gs.run_command("g.region", raster=elevation)
 
 for area in contAreas:
