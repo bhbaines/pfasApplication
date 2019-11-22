@@ -30,4 +30,9 @@ print("Processing {} raster maps...".format(len(accumRasts)))
 
 for accum in accumRasts:
     gs.run_command("g.region", raster=accum)
-    gs.run_command("r.stream.extract", accumulation=accum, elevation=elevRast, threshold=streamThresh, stream_raster=accum + '_streams')
+
+    try:
+        gs.run_command("r.stream.extract", accumulation=accum, elevation=elevRast, threshold=streamThresh, stream_raster=accum + '_streams', memory=131072)
+    except gs.CalledModuleError:
+        print("Failed computing:", accum)
+        raise
