@@ -3,12 +3,13 @@ import grass.script as gs
 import os
 import re
 
-if len(sys.argv) in (4, 5) and sys.argv[1] and sys.argv[2] and sys.argv[3]:
+if len(sys.argv) in (5, 6) and sys.argv[1] and sys.argv[2] and sys.argv[3] and sys.argv[4]:
     memory = sys.argv[1]
     elevation = sys.argv[2]
-    pattern = sys.argv[3]
-    if len(sys.argv) == 5:
-        exclude = sys.argv[4]
+    threshold = sys.argv[3]
+    pattern = sys.argv[4]
+    if len(sys.argv) == 6:
+        exclude = sys.argv[5]
     else:
         exclude = None
 else:
@@ -32,7 +33,7 @@ for area in contAreas:
     gs.run_command("g.region", vector=area, align=elevation)
 
     try:
-        gs.run_command("r.watershed", elevation=elevation, accumulation=area[:-4] + 'accum', drainage=area[:-4] + 'draindir', memory=memory, flags=flags, overwrite=True)
+        gs.run_command("r.watershed", elevation=elevation, accumulation=area[:-4] + 'accum', drainage=area[:-4] + 'draindir', stream=area[:-4] + 'stream', threshold=threshold, memory=memory, flags=flags, overwrite=True)
     except gs.CalledModuleError:
         print("Failed computing:", area)
         raise
