@@ -31,7 +31,7 @@ for site in coords:
     grass.run_command('r.water.outlet', input=drainDir, output=contArearast, 
                       coordinates=coordPair, overwrite=True)
     grass.run_command('r.to.vect', input=contArearast, output=contAreavect, type='area', overwrite=True)
-    grass.run_command('v.db.addcolumn' map=contAreavect, columns='epa_src_id integer')
+    grass.run_command('v.db.addcolumn', map=contAreavect, columns='epa_src_id integer')
     grass.run_command('v.db.update', map=contAreavect, layer='1', column='epa_src_id', value=epa)
     contAreavects.append(contAreavect)
 #Patch contributing area vectors
