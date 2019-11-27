@@ -22,7 +22,7 @@ if len(sys.argv) != 1 and sys.argv[1]:
 else:
     sys.exit("Please enter filename pattern - Usage: script.py pattern (e.g., ^ContArea_SW_[0-9]+_vect$)")
 
-accumRasts = gs.read_command("g.list", type="raster", pattern=pattern, exclude=exclude, flags="e").splitlines()
+accumRasts = gs.read_command("g.list", type="raster", pattern=pattern, exclude=exclude, flags="e", mapset=".").splitlines()
 
 gs.use_temp_region()
 
