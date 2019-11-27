@@ -1,0 +1,8 @@
+Once points are snapped to streams:
+
+1)  v.db.addtable map=<snappedpoints>
+2)  v.to.db map=<snappedpoints> type=point option=coor columns=X,Y
+3)  v.db.join map=<snappedpoints> column=cat other_table=<non-snappedpoints> other_column=cat subset_columns=id, epa_src_id
+4)  db.out.ogr input=<snappedpoints> output=<output> format=CSV
+5)  Batch r.water.outlet >>> see contAreaVects_SWonly.py
+
